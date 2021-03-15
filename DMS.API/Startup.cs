@@ -1,3 +1,4 @@
+using DMS.DAL.Context;
 using DMS.Services.Extension;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +33,7 @@ namespace DMS.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DMSContext context)
         {
             if (env.IsDevelopment())
             {
@@ -49,6 +50,9 @@ namespace DMS.API
             {
                 endpoints.MapControllers();
             });
+
+            //Add DB
+            context.Database.EnsureCreated();
         }
     }
 }

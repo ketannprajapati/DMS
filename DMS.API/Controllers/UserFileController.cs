@@ -35,30 +35,11 @@ namespace DMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserFile>> Post()
+        public async Task<ActionResult<UserFile>> Post(UserFile userFile)
         {
-            try
-            {
-                UserFile userFile = new UserFile();
-                var file = Request.Form.Files[0];
-                
-                var memoryStream = new MemoryStream();
-                await file.CopyToAsync(memoryStream).ConfigureAwait(false);
-
-                var userName = Request.Form["UserName"].ToString();
-                userFile.FileName = file.Name;
-                userFile.FileData = memoryStream.ToArray();
-                userFile.UserName = userName;
-
-
                 userFile = await _userFileService.Add(userFile);
 
                 return userFile;
-            }
-            catch (System.Exception ex)
-            {
-                return null;
-            }
         }
 
         [HttpDelete("{id}")]

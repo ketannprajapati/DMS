@@ -1,3 +1,6 @@
+using DMS.RestClient;
+using DMS.Web.API;
+using DMS.Web.Contract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DMS.Web
@@ -24,6 +28,10 @@ namespace DMS.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddTransient<HttpClient>();
+            services.AddTransient<IUserFileService, UserFileService>();
+            services.AddTransient<IHttpRestClient, HttpRestClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

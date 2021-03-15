@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DMS.Models;
+using DMS.Web.Contract;
+using DMS.Web.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,27 +13,64 @@ namespace DMS.Web.Controllers
 {
     public class UserFileController : Controller
     {
+        private readonly IUserFileService _userFileService;
 
-        //Return List view for user Files List
-        public IActionResult List()
+        public UserFileController(IUserFileService userFileService)
         {
-            return View();
+            this._userFileService = userFileService;
         }
 
+        public async Task<IActionResult> List()
+        {
+            var userFiles = await _userFileService.GetUserFiles();
+            return View(userFiles);
+        }
 
-        //return view for add and Update User files
         public IActionResult AddFile()
         {
             return View();
         }
 
-
-        //Post User File Data
-        public async Task<ActionResult> Create()
+        [HttpPost]
+        public async Task<ActionResult> Create(string userName, IFormFile fileData)
         {
-            return View("Index");
+            try
+            {
+                UserFile userFile = new UserFile();
+
+                var memoryStream = new MemoryStream();
+                await fileData.CopyToAsync(memoryStream).ConfigureAwait(false);
+
+                userFile.FileName = fileData.FileName;
+                userFile.FileData = memoryStream.ToArray();
+                userFile.UserName = userName;
+
+                userFile = await _userFileService.SaveUserFile(userFile);
+
+               return RedirectToAction("List");
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<ActionResult> Delete(string id)
+        {
+            await _userFileService.DeleteUserFile(id);
+
+            return RedirectToAction("List");
+        }
+
+        public async Task<ActionResult> Download(string id)
+        {
+            var userFile = await _userFileService.GetUserFile(id);
+
+            byte[] byteArray = userFile.FileData;
+            Stream stream = new MemoryStream(byteArray);
+            return File(stream, "application/pdf", userFile.FileName);
         }
     }
 
-    
+
 }
