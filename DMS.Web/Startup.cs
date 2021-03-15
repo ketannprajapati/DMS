@@ -50,7 +50,7 @@ namespace DMS.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=UserFile}/{action=List}/{id?}");
             });
         }
     }
