@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DMS.DAL\DMS.DAL.csproj" />
+    <ProjectReference Include="..\DMS.Models\DMS.Models.csproj" />
+  </ItemGroup>
+
 </Project>
