@@ -1,5 +1,6 @@
 ﻿using DMS.Models;
 using DMS.Services;
+using DMS.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,9 +15,9 @@ namespace DMS.API.Controllers
     [ApiController]
     public class UserFileController : ControllerBase
     {
-        private readonly UserFileService _userFileService;
+        private readonly IUserFileService _userFileService;
 
-        public UserFileController(UserFileService userFileServicwe)
+        public UserFileController(IUserFileService userFileServicwe)
         {
             this._userFileService = userFileServicwe;
         }

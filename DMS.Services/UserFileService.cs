@@ -1,12 +1,13 @@
 ﻿using DMS.DAL;
 using DMS.Models;
+using DMS.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DMS.Services
 {
-    public class UserFileService
+    public class UserFileService : IUserFileService
     {
         private UserFileRepository _repository;
 
