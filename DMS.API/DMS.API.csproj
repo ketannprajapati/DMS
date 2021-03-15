@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DMS.Models\DMS.Models.csproj" />
+    <ProjectReference Include="..\DMS.Services\DMS.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>
