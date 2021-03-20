@@ -1,0 +1,30 @@
+﻿@model List<DMS.Models.UserFile>
+
+
+<h1>User File List</h1>
+@Html.ActionLink("Add UserFile", "AddFile")
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">User Name</th>
+            <th scope="col">File Name</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    @if (Model != null)
+    {
+
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>@item.UserName</td>
+    <td>@item.FileName</td>
+    <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
+    <td>@Html.ActionLink("Download", "Download", new { id = item.Id })</td>
+</tr>
+        }
+    }
+</table>
+
